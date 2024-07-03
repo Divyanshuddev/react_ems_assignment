@@ -70,9 +70,6 @@ export default function AdminDashboard() {
         {
             employeeData.map((data)=>(
                 <Box key={data.id} sx={style.employeecard}>
-                {/* <Typography >{data.firstName}</Typography>
-                <Button onClick={()=>handleEdit(data.id)}>Edit</Button>
-                <Button onClick={()=>handleDelete(data.id)}>Delete {data.id}</Button> */}
                 <Box>
                     <Typography>Name</Typography>
                     <Typography>{data.firstName+" "+data.lastName}</Typography>
@@ -89,7 +86,7 @@ export default function AdminDashboard() {
                 <Button onClick={()=>handleEdit(data.id)}>Edit</Button>
                 </Box>
                 <Box>
-                    <Button onClick={()=>handleDelete(data.id)}>Delete {data.id}</Button>
+                    <Button onClick={()=>handleDelete(data.id)}>Delete </Button>
                 </Box>
                 </Box>
                 

@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from 'axios';
+import axios from "axios";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,33 +22,41 @@ const style = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItem: "center",
+    alignContent: "center",
+  },
+  formContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
   },
 };
 
 export default function AddEmployee(props) {
   const [employeeData, setEmployeeData] = useState({
-    firstName: props.type==="add"?"":props.data.firstName,
-    lastName: props.type==="add"?"":props.data.lastName,
-    designation: props.type==="add"?"":props.data.designation,
-    phoneNumber: props.type==="add"?"":props.data.phoneNumber,
-    email: props.type==="add"?"":props.data.email,
-    password: props.type==="add"?"":props.data.password,
+    firstName: props.type === "add" ? "" : props.data.firstName,
+    lastName: props.type === "add" ? "" : props.data.lastName,
+    designation: props.type === "add" ? "" : props.data.designation,
+    phoneNumber: props.type === "add" ? "" : props.data.phoneNumber,
+    email: props.type === "add" ? "" : props.data.email,
+    password: props.type === "add" ? "" : props.data.password,
   });
-  
+
   const onhandleInputChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData({ ...employeeData, [name]: value });
   };
 
-  const handleSubmit=(event)=>{
+  const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3006/employeeData',employeeData)
-    .then(res =>{
-      alert("data added")
-      console.log(res)
-    })
-    .catch(err=>console.log(err))
-  }
+    axios
+      .post("http://localhost:3006/employeeData", employeeData)
+      .then((res) => {
+        alert("data added");
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <Modal
@@ -59,12 +67,12 @@ export default function AddEmployee(props) {
       >
         <Box sx={style}>
           <Box sx={style.header}>
-            <Typography>Add Employee</Typography>
+            <Typography variant="h5">Add Employee</Typography>
             <IconButton onClick={() => props.closeModal()}>
               <CloseIcon />
             </IconButton>
           </Box>
-          <Box>
+          <Box sx={style.formContainer}>
             <TextField
               id="outlined-basic"
               label="First Name"
@@ -116,7 +124,7 @@ export default function AddEmployee(props) {
             ></TextField>
           </Box>
           <Box>
-            <Button>Cancel</Button>
+            <Button onClick={props.closeModal}>Cancel</Button>
             <Button onClick={handleSubmit}>Save</Button>
           </Box>
         </Box>
