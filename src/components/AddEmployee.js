@@ -41,21 +41,36 @@ export default function AddEmployee(props) {
     email: props.type === "add" ? "" : props.data.email,
     password: props.type === "add" ? "" : props.data.password,
   });
-
+  const [errors, setErrors] = useState({});
   const onhandleInputChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData({ ...employeeData, [name]: value });
   };
 
+  const validate = () => {
+    let tempErrors = {};
+    tempErrors.firstName = employeeData.firstName ? "" : "First Name is required.";
+    tempErrors.lastName = employeeData.lastName ? "" : "Last Name is required.";
+    tempErrors.designation = employeeData.designation ? "" : "Designation is required.";
+    tempErrors.phoneNumber = employeeData.phoneNumber ? "" : "Phone Number is required.";
+    tempErrors.email = employeeData.email ? "" : "Email is required.";
+    tempErrors.password = employeeData.password ? "" : "Password is required.";
+    setErrors(tempErrors);
+    return Object.values(tempErrors).every(x => x === "");
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3006/employeeData", employeeData)
-      .then((res) => {
-        alert("data added");
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    if (validate()) {
+      axios
+        .post("http://localhost:3006/employeeData", employeeData)
+        .then((res) => {
+          alert("Data added successfully");
+          console.log(res);
+          props.closeModal();
+        })
+        .catch((err) => console.log(err));
+    }
   };
   return (
     <div>
@@ -80,6 +95,8 @@ export default function AddEmployee(props) {
               name="firstName"
               value={employeeData.firstName}
               onChange={onhandleInputChange}
+              error={!!errors.firstName}
+              helperText={errors.firstName}
             ></TextField>
             <TextField
               id="outlined-basic"
@@ -88,6 +105,8 @@ export default function AddEmployee(props) {
               name="lastName"
               value={employeeData.lastName}
               onChange={onhandleInputChange}
+              error={!!errors.lastName}
+              helperText={errors.lastName}
             ></TextField>
             <TextField
               id="outlined-basic"
@@ -96,22 +115,30 @@ export default function AddEmployee(props) {
               name="designation"
               value={employeeData.designation}
               onChange={onhandleInputChange}
+              error={!!errors.designation}
+              helperText={errors.designation}
             ></TextField>
             <TextField
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
               name="phoneNumber"
+              type="tel"
               value={employeeData.phoneNumber}
               onChange={onhandleInputChange}
+              error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber}
             ></TextField>
             <TextField
               id="outlined-basic"
               label="Email"
               variant="outlined"
               name="email"
+              type="email"
               value={employeeData.email}
               onChange={onhandleInputChange}
+              error={!!errors.email}
+              helperText={errors.email}
             ></TextField>
             <TextField
               id="outlined-basic"
@@ -121,11 +148,13 @@ export default function AddEmployee(props) {
               name="password"
               value={employeeData.password}
               onChange={onhandleInputChange}
+              error={!!errors.password}
+              helperText={errors.password}
             ></TextField>
           </Box>
-          <Box>
-            <Button onClick={props.closeModal}>Cancel</Button>
-            <Button onClick={handleSubmit}>Save</Button>
+          <Box sx={{display:"flex",justifyContent:"flex-end",flexDirection:"row",gap:"10px"}} my={2}>
+            <Button variant="contained" onClick={props.closeModal}>Cancel</Button>
+            <Button variant="contained" onClick={()=>{handleSubmit();props.closeModal()}}>Save</Button>
           </Box>
         </Box>
       </Modal>

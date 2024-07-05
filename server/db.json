@@ -1,31 +1,5 @@
 {
   "employeeData": [
-    {
-      "id": "466c",
-      "firstName": "sadvsfd",
-      "lastName": "ddgbf",
-      "designation": "cdsvdgfcdsfd",
-      "phoneNumber": "",
-      "email": "",
-      "password": ""
-    },
-    {
-      "id": "68fe",
-      "firstName": "12",
-      "lastName": "213",
-      "designation": "213r",
-      "phoneNumber": "23",
-      "email": "312",
-      "password": "321"
-    },
-    {
-      "id": "25c0",
-      "firstName": "dahkwfe",
-      "lastName": "ebfhwre",
-      "designation": "dnfbwehrve",
-      "phoneNumber": "dqwefrgt",
-      "email": "dqwefr3",
-      "password": "dwerf3"
-    }
+    
   ]
 }
